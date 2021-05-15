@@ -13,16 +13,16 @@ namespace BehavioralFeatures.MultiThreading
     {
         public async Task WriteAsync(string msg)
         {
-            //await Task.Delay(100 * new Random().Next(10));
+            await Task.Delay(100 * new Random().Next(10));
             Console.WriteLine(msg);
         }
 
-        public void Consumer()
+        public async void Consumer()
         {
             for (int i = 0; i < 100; i++)
             {
-                WriteAsync(i.ToString());
-                WriteAsync((i + 10).ToString());
+                await WriteAsync(i.ToString());
+                await WriteAsync((i + 10).ToString());
             }
         }
 
