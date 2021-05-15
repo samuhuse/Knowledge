@@ -35,7 +35,6 @@ namespace HostedServicies
 
             services.AddHostedService<NotificationDispatcher>();
             services.AddSingleton(Channel.CreateUnbounded<User>());
-            services.AddTransient<Notifications>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
