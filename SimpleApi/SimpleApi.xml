@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SimpleApi</name>
+    </assembly>
+    <members>
+        <member name="M:SimpleApi.Controllers.ContactsController.GetAllContacts">
+            <summary>
+            Gets all Contacts
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleApi.Controllers.ContactsController.GetCompanyContacts(System.Int32)">
+            <summary>
+            Gets all company contacts
+            </summary>
+            <param name="companyId">Id of the Company</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleApi.Controllers.ContactsController.GetContact(System.Int32)">
+            <summary>
+            Get Contact by id
+            </summary>
+            <param name="id">Id of the contact</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleApi.Controllers.ContactsController.AddContact(SimpleApi.Model.Dtos.Create.ContactCreateDto)">
+            <summary>
+            Add a new contact
+            </summary>
+            <param name="contactDto">Content of the new Contact</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleApi.Controllers.ContactsController.UpdateContact(SimpleApi.Model.Dtos.Update.ContactUpdateDto)">
+            <summary>
+            Update an existing Contact
+            </summary>
+            <param name="id">Id of the Contact to update</param>
+            <param name="contactDto">New content of the Contact to update</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleApi.Controllers.ContactsController.DeleteContact(System.Int32)">
+            <summary>
+            Delete a Contact
+            </summary>
+            <param name="id">Id of the Contact to delete</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
