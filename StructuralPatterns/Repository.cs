@@ -98,15 +98,19 @@ namespace StructuralPatterns
             TEntity Get(int id);
             IEnumerable<TEntity> GetAll();
             IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-
-            // This method was not in the videos, but I thought it would be useful to add.
             TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
 
-            void Add(TEntity entity);
-            void AddRange(IEnumerable<TEntity> entities);
+            bool Exists(Expression<Func<TEntity, bool>> predicate);
 
-            void Remove(TEntity entity);
-            void RemoveRange(IEnumerable<TEntity> entities);
+            bool Add(TEntity entity);
+            bool AddRange(IEnumerable<TEntity> entities);
+
+            bool Update(TEntity entity);
+
+            bool Remove(TEntity entity);
+            bool RemoveRange(IEnumerable<TEntity> entities);
+
+            int Save();
         }
 
         public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
@@ -138,24 +142,48 @@ namespace StructuralPatterns
                 return Context.Set<TEntity>().SingleOrDefault(predicate);
             }
 
-            public void Add(TEntity entity)
+            public virtual bool Exists(Expression<Func<TEntity, bool>> predicate)
             {
-                Context.Set<TEntity>().Add(entity);
+                return Context.Set<TEntity>().AsNoTracking().Any(predicate);
             }
 
-            public void AddRange(IEnumerable<TEntity> entities)
+            public virtual bool Add(TEntity entity)
             {
-                Context.Set<TEntity>().AddRange(entities);
+                try { Context.Set<TEntity>().Add(entity); }
+                catch { return false; }
+                return true;
+            }
+            public virtual bool Update(TEntity entity)
+            {
+                try { Context.Set<TEntity>().Update(entity); }
+                catch{ return false; }
+                return true;
             }
 
-            public void Remove(TEntity entity)
+            public virtual bool AddRange(IEnumerable<TEntity> entities)
             {
-                Context.Set<TEntity>().Remove(entity);
+                try { Context.Set<TEntity>().AddRange(entities); }
+                catch { return false; }
+                return true;
             }
 
-            public void RemoveRange(IEnumerable<TEntity> entities)
+            public virtual bool Remove(TEntity entity)
             {
-                Context.Set<TEntity>().RemoveRange(entities);
+                try { Context.Set<TEntity>().Remove(entity); }
+                catch { return false; }
+                return true;
+            }
+
+            public virtual bool RemoveRange(IEnumerable<TEntity> entities)
+            {
+                try { Context.Set<TEntity>().RemoveRange(entities); }
+                catch { return true; }
+                return false;
+            }
+
+            public virtual int Save()
+            {
+                return Context.SaveChanges();
             }
         }
 
@@ -171,29 +199,23 @@ namespace StructuralPatterns
 
         public class CourseRepository : RepositoryBase<Course>, ICourseRepository
         {
-            public CourseRepository(CustomContext context)
-                : base(context)
-            {
-            }
+            public CourseRepository(CustomContext context) : base(context) { }
+
+            public CustomContext CastedContext => Context as CustomContext;
 
             public IEnumerable<Course> GetTopSellingCourses(int count)
             {
-                return PlutoContext.Courses.OrderByDescending(c => c.FullPrice).Take(count).ToList();
+                return CastedContext.Courses.OrderByDescending(c => c.FullPrice).Take(count).ToList();
             }
 
             public IEnumerable<Course> GetCoursesWithAuthors(int pageIndex, int pageSize = 10)
             {
-                return PlutoContext.Courses
+                return CastedContext.Courses
                     .Include(c => c.Author)
                     .OrderBy(c => c.Name)
                     .Skip((pageIndex - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
-            }
-
-            public CustomContext PlutoContext
-            {
-                get { return Context as CustomContext; }
             }
         }       
 
@@ -210,14 +232,11 @@ namespace StructuralPatterns
         {
             public AuthorRepository(CustomContext context) : base(context) { }
 
+            public CustomContext CastedContext => Context as CustomContext;
+
             public Author GetAuthorWithCourses(int id)
             {
-                return PlutoContext.Authors.Include(a => a.Courses).SingleOrDefault(a => a.Id == id);
-            }
-
-            public CustomContext PlutoContext
-            {
-                get { return Context as CustomContext; }
+                return CastedContext.Authors.Include(a => a.Courses).SingleOrDefault(a => a.Id == id);
             }
         }
 
