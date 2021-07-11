@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using SimpleApi.Model;
-using SimpleApi.Model.Dtos;
 using SimpleApi.Model.Dtos.Read;
 using SimpleApi.Model.Dtos.Update;
 using SimpleApi.Repository;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SimpleApi.Controllers
 {
@@ -42,7 +38,7 @@ namespace SimpleApi.Controllers
             return Ok(contactDtoList);
         }
 
-        [HttpGet("id:int", Name ="GetCompany")]
+        [HttpGet("id:int", Name = "GetCompany")]
         [ProducesResponseType(200, Type = typeof(CompanyReadDto))]
         [ProducesResponseType(404)]
         public IActionResult GetCompany(int id)
@@ -56,8 +52,8 @@ namespace SimpleApi.Controllers
         [HttpPut]
         public IActionResult AddCompany([FromBody] CompanyCreateDto companyDto)
         {
-            if(companyDto is null) { return BadRequest(ModelState); }
-            if(_companyRepository.Exists(c => c.Name == companyDto.Name))
+            if (companyDto is null) { return BadRequest(ModelState); }
+            if (_companyRepository.Exists(c => c.Name == companyDto.Name))
             {
                 ModelState.AddModelError("", "Company already exists in the database");
                 return StatusCode(500, ModelState);
@@ -77,10 +73,10 @@ namespace SimpleApi.Controllers
         }
 
         [HttpPatch("id:int")]
-        public IActionResult UpdateCompany(int id, [FromBody] CompanyUpdateDto companyDto) 
+        public IActionResult UpdateCompany(int id, [FromBody] CompanyUpdateDto companyDto)
         {
             if (companyDto is null || id != companyDto?.Id) { return BadRequest(); }
-            if(!_companyRepository.Exists(c => c.Id == id))
+            if (!_companyRepository.Exists(c => c.Id == id))
             {
                 ModelState.AddModelError("", "Company doesn't exist in the database");
                 return StatusCode(500, ModelState);
@@ -103,15 +99,15 @@ namespace SimpleApi.Controllers
         public IActionResult DeleteCompany(int id)
         {
             Company company = _companyRepository.SingleOrDefault(c => c.Id == id);
-            
-            if(company is null) 
+
+            if (company is null)
             {
                 ModelState.AddModelError("", "Company doesn't exists in the database");
                 return StatusCode(500, ModelState);
             }
 
             _companyRepository.Remove(company);
-            if(_companyRepository.Save() > 0)
+            if (_companyRepository.Save() > 0)
             {
                 return NoContent();
             }

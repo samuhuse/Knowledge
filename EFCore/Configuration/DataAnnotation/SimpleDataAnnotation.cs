@@ -29,10 +29,14 @@ namespace EFCoreLaucher.Configuration.DataAnnotation
             [MaxLength(15)] // Set max column lenght
             public string Surname { get; set; }
             [Required] // Set not null column
+            [ConcurrencyCheck] // Uses this proprety as concurrency check
             public string Email { get; set; }
 
             [NotMapped] // Field not mapped with the database
             public string Profession { get; set; }
+
+            [Timestamp] // Set as timestamp proprey, is used also as concurrency token
+            public byte[] Timestamp { get; set; }
         }
 
         #endregion

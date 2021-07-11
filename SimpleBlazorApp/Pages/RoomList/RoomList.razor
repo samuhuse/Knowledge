@@ -1,0 +1,54 @@
+﻿@page "/RoomList"
+
+@using Model
+
+
+<div class="border p-2 mt-2">
+    <h3>RoomList</h3>
+    <div class="row container">
+        @foreach (Room room in roomList)
+        {
+            <RoomView Room="room" /> <br />
+        }
+    </div>
+    <h3>Ameneties List</h3>
+    <div class="row container">
+        @foreach (Ameneties amenetie in amenetiesList)
+        {
+            <AmenetiesView Amenetie="amenetie" /> <br />
+        }
+    </div>
+</div>
+
+    @code {
+        List<Room> roomList = new List<Room>()
+    {
+        new Room
+        {
+            Id = 1,
+            Name = "Villa",
+            Price = 100,
+            Features = new List<RoomFeatures>
+            {
+                new RoomFeatures{Name = "Beds", Value="2"}
+    }
+        },
+
+        new Room
+        {
+            Id = 2,
+            Name = "Super Villa",
+            Price = 200,
+            Features = new List<RoomFeatures>
+            {
+                new RoomFeatures{Name = "Beds", Value="4"},
+                new RoomFeatures{Name = "Balcony", Value="2"}
+            }
+        }
+    };
+        List<Ameneties> amenetiesList = new List<Ameneties>
+    {
+        new Ameneties{Id=1, Servicies= new List<string>{"Gym","SwimmingPool"}},
+        new Ameneties{Id=2, Servicies= new List<string>{"Gym","SwimmingPool","Buffet"}}
+    };
+    }

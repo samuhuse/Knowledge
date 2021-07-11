@@ -1,0 +1,26 @@
+﻿
+<br/>
+Count is: @Count
+<br/>
+
+@foreach (string e in Events)
+{
+    @e
+    <br/>
+}
+
+@code {
+    [Parameter]
+    public int Count { get; set; }
+    List<string> Events = new List<string>();
+
+    protected override void OnInitialized()
+    {
+        Events.Add("Component: OnInizialized is called");
+    }
+
+    protected override void OnParametersSet()
+    {
+        Events.Add("Component : OnParamiterSet is called");
+    }
+}

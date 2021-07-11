@@ -21,6 +21,8 @@ namespace EFCoreLaucher.Configuration.FluentApi
             public string Surname { get; set; } // Set max column lenght
             public string Email { get; set; } // Set not null column
             public string Profession { get; set; } // Field not mapped with the database
+
+            public byte[] Timestamp { get; set; }
         }
 
         #endregion
@@ -68,6 +70,12 @@ namespace EFCoreLaucher.Configuration.FluentApi
 
                 // Field not mapped with the database
                 modelBuilder.Entity<Person>().Ignore(e => e.Profession);
+
+                // Set concurrency token
+                modelBuilder.Entity<Person>().Property(e => e.Name).IsConcurrencyToken();
+
+                // Set Timestamp proprety
+                modelBuilder.Entity<Person>().Property(e => e.Timestamp).IsRowVersion();
             }
         }
 

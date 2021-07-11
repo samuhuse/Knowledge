@@ -1,0 +1,57 @@
+﻿@model SimpleMvcConsumer.Models.Drink
+
+@{
+    bool IsCreate = Model.Id == 0;
+    string title = IsCreate ? "Create Drink" : "Update Drink";
+}
+
+
+<form method="post" asp-action="Upsert">
+
+    <div class="row px-2 mx-2 backgroundWhite border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.Id != 0)
+        {
+            <input type="hidden" asp-for="Id" />
+        }
+        <div class="col-12 p-3">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Name"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    <label asp-for="IsAcholic"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="IsAcholic" class="form-check" />
+                    <span asp-validation-for="IsAcholic" class="form-check-input"></span>
+                </div>
+                <div class="col-4">
+                    <label asp-for="Grade"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Grade" class="form-control-range" />
+                    <span asp-validation-for="Grade" class="form-control-range"></span>
+                </div>                
+            </div>
+            <div class="form-group row">
+                <div class="col-4 offset-4">
+                    <button type="submit" class="btn btn-primary form-control">
+                        @( IsCreate ? "Create" : "Update")
+                    </button>
+                </div>
+                <div class="col-4">
+                    <a class="btn btn-success form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

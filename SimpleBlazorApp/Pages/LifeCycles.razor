@@ -1,0 +1,71 @@
+﻿@page "/LifeCycle"
+
+@using System.Threading
+
+<h3>LifeCycles</h3>
+
+Count : @_count
+<br />
+<input type="button" value="Increment" class="btn btn-success" @onclick="IncrementCounter" />
+<br />
+CountDown : @_timerCounter
+<br />
+<input type="button" value="Start" class="btn btn-success" @onclick="StartCountDown" />
+@foreach (string e in Events)
+{
+    <span>@e</span>
+    <br />
+}
+
+
+
+<LifeCycleComponent Count="_count"></LifeCycleComponent>
+
+@code {
+    private int _count = 0;
+    private int _timerCounter = 5;
+
+    private void IncrementCounter() { _count++; }
+
+    List<string> Events = new List<string>();
+
+    protected override void OnInitialized()
+    {
+        Events.Add("OnInizialized is called");
+    }
+
+    protected override void OnParametersSet()
+    {
+        Events.Add("OnParametersSet is called");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Events.Add("OnAfterRender is called for the first time");
+        }
+        Events.Add("OnAfterRender is called");
+    }
+
+    protected override bool ShouldRender()
+    {
+        Events.Add("ShouldRender is called");
+        return base.ShouldRender();
+    }
+
+    private void StartCountDown()
+    {
+        var timer = new Timer(TimerCallBack, null, 1000, 1000);
+    }
+
+    private void TimerCallBack(object state)
+    {
+        if (_timerCounter > 0)
+        {
+            _timerCounter--;
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+}
