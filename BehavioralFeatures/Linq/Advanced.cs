@@ -56,6 +56,7 @@ namespace BehavioralFeatures.Linq
         #endregion
 
         List<Person> people;
+
         List<Buyer> buyers;
         List<Supplier> suppliers;
 
@@ -249,22 +250,6 @@ namespace BehavioralFeatures.Linq
                 Console.WriteLine($"{item.District}");
                 Console.WriteLine($"  {item.Name}, {item.BuyersName}");
             }
-        }
-
-        [Test]
-        public void PerformanceTricks()
-        {
-            List<int> integers = new List<int> { 1, 2, 3, 4, 5, 6, 9, 8, 7 };
-
-            // Get an element
-            int i = integers.Where(x => x == 3).FirstOrDefault(); // Less efficient
-
-            i = integers.Find(x => x == 3); // More efficient
-
-            integers.Sort();
-            i = integers.BinarySearch(i); // More efficient, use default comparer: virtual Equals(obj)
-
-
         }
     }
 }

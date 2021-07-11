@@ -1,14 +1,19 @@
 ﻿using AutoMapper;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using SimpleApi.Model;
+using SimpleApi.Model.Dtos;
 using SimpleApi.Model.Dtos.Create;
 using SimpleApi.Model.Dtos.Read;
 using SimpleApi.Model.Dtos.Update;
 using SimpleApi.Repository;
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SimpleApi.Controllers
 {
@@ -66,7 +71,7 @@ namespace SimpleApi.Controllers
         /// </summary>
         /// <param name="id">Id of the contact</param>
         /// <returns></returns>
-        [HttpGet("{id:int}", Name = "GetContact")]
+        [HttpGet("{id:int}",Name = "GetContact")]
         [ProducesResponseType(200, Type = typeof(ContactReadDto))]
         [ProducesResponseType(404)]
         public IActionResult GetContact(int id)
@@ -89,7 +94,7 @@ namespace SimpleApi.Controllers
         {
             if (contactDto is null) return BadRequest(ModelState);
 
-            if (_contactRepository.Exists(c => c.Name == contactDto.Name && c.Surname == contactDto.Surname))
+            if(_contactRepository.Exists(c => c.Name == contactDto.Name && c.Surname == contactDto.Surname))
             {
                 ModelState.AddModelError("", "contact already in the database");
                 return StatusCode(500, ModelState);
@@ -101,13 +106,13 @@ namespace SimpleApi.Controllers
 
             if (_contactRepository.Save() > 0)
             {
-                return CreatedAtRoute("GetContact", new { contact.Id }, contact);
+                return CreatedAtRoute("GetContact",new { contact.Id }, contact);
             }
             else
             {
                 ModelState.AddModelError("", "Something went wrong savign the contact");
                 return StatusCode(500, ModelState);
-            }
+            }            
         }
 
         /// <summary>
@@ -116,8 +121,8 @@ namespace SimpleApi.Controllers
         /// <param name="id">Id of the Contact to update</param>
         /// <param name="contactDto">New content of the Contact to update</param>
         /// <returns></returns>
-        [HttpPatch(Name = "UpdateContact")]
-        [ProducesResponseType(204)]
+        [HttpPatch(Name = "UpdateContact")]        
+        [ProducesResponseType(204)]        
         [ProducesResponseType(500)]
         public IActionResult UpdateContact([FromBody] ContactUpdateDto contactDto)
         {
