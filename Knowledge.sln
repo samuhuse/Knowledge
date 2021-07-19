@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore", "EFCore\EFCore.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtBearerApiAuthorization", "JwtBearerApiAuthorization\JwtBearerApiAuthorization.csproj", "{A0CBAE3B-F973-4720-9D43-3BB75C52EED2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionFilters", "ActionFilters\ActionFilters.csproj", "{612A2524-17DC-4459-84E1-62E7E3183E0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{A0CBAE3B-F973-4720-9D43-3BB75C52EED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0CBAE3B-F973-4720-9D43-3BB75C52EED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0CBAE3B-F973-4720-9D43-3BB75C52EED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{612A2524-17DC-4459-84E1-62E7E3183E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612A2524-17DC-4459-84E1-62E7E3183E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612A2524-17DC-4459-84E1-62E7E3183E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612A2524-17DC-4459-84E1-62E7E3183E0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{E83FDAA6-C8E9-4A1F-A58E-CEC963CFEA90} = {D431682A-4E02-4234-A4DE-D3C6D784FB72}
 		{BC9D20C0-4E8C-4F31-8AF3-B77435D29D75} = {0405B149-D608-45E4-8588-738A50189013}
 		{A0CBAE3B-F973-4720-9D43-3BB75C52EED2} = {D431682A-4E02-4234-A4DE-D3C6D784FB72}
+		{612A2524-17DC-4459-84E1-62E7E3183E0F} = {D431682A-4E02-4234-A4DE-D3C6D784FB72}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCBADC76-A034-4848-A882-05789DE4F51E}
