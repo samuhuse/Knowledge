@@ -1,0 +1,27 @@
+﻿@page "/dropdown"
+
+<h3>DropDown</h3>
+
+<select @bind="selectedString">
+    @foreach (var city in cityList)
+    {
+        <option value="@city">@city</option>
+    }
+</select>
+<br/>
+
+<span>You have selected @selectedString </span>
+
+@code {
+
+    string selectedString = "";
+
+    List<string> cityList = new List<string>()
+    {
+        "Rome",
+        "Venice",
+        "Berlin",
+        "London",
+        "Telaviv"
+    };
+}

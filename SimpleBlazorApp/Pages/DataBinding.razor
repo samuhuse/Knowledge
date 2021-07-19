@@ -1,0 +1,29 @@
+﻿@page "/DataBinding"
+
+<h3>DataBinding</h3>
+
+@*One way Binding*@
+
+Room : @_room.Name
+<br />
+Price : @_room.Price
+<br />
+<input type="number" value="@_room.Price" />
+<br />
+
+@*Two way Binding*@
+<br />
+<input type="number" @bind-value="@_room.Price" />
+<br />
+<input type="checkbox" @bind-value="@_room.IsActive" checked="@(_room.IsActive ? "checked" : null)"/>
+<span> This room is @(_room.IsActive ? "Active" : "Inactive") </span>
+
+@code {
+    private Model.Room _room = new Model.Room
+    {
+        Id = 1,
+        Price = 100,
+        Name = "super villa",
+        IsActive = true
+    };
+}

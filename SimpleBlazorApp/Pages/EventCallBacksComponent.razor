@@ -1,0 +1,24 @@
+﻿@using Model
+
+<div class="bg-light border p-2 col-5 offset-1">
+<input type="checkbox" @onchange="CheckBoxChanged"/> 
+    @Room.Name
+<br/>$@Room.Price
+
+
+
+</div>
+
+@code {
+    [Parameter]
+    public Room Room { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnChecked { get; set; }
+
+    protected async Task CheckBoxChanged(ChangeEventArgs e)
+    {
+        await OnChecked.InvokeAsync((bool)e.Value);
+    }
+
+}

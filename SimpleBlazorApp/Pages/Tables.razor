@@ -1,0 +1,93 @@
+﻿@page "/Tables"
+
+@using Model;
+@using System.Reflection;
+
+<h3>Tables</h3>
+
+<table class="table table-dark">
+    <tr>
+        @foreach (string column in columns)
+        {
+            <th>
+                @column
+            </th>
+        }
+    </tr>
+
+    @foreach (Room room in roomList)
+    {
+    <tr>
+        @foreach (string column in columns)
+        {
+            <td>
+                @GetColumnValue(column, room)
+            </td>
+        }
+    </tr>
+    }
+
+</table>
+
+
+
+@code {
+
+    private string GetColumnValue(string columnName, Room room)
+    {
+        PropertyInfo prop = typeof(Room).GetProperty(columnName);
+        if (prop is not null) return prop.GetValue(room).ToString();
+        else
+        {
+            return room.Features.Where(f => f.Name == columnName).FirstOrDefault()?.Value;
+        }
+    }
+
+    List<string> columns = new List<string>();
+
+    protected override void OnInitialized()
+    {
+        roomList.ForEach(r =>
+        {
+            r.GetType().GetProperties().ToList().ForEach(p =>
+            {
+                if (p.GetValue(r) is IEnumerable<RoomFeatures> l)
+                {
+                    columns.AddRange(l.Select(f => f.Name));
+                }
+
+                else if (p.GetValue(r) is not null)
+                {
+                    columns.Add(p.Name);
+                }
+            });
+        });
+
+        columns = columns.Distinct().ToList();
+    }
+
+    List<Room> roomList = new List<Room>
+    {
+        new Room
+        {
+            Name = "Villa",
+            Price = 100,
+            Features = new List<RoomFeatures>
+            {
+                new RoomFeatures{Name = "Beds", Value="2"}
+            }
+        },
+
+        new Room
+        {
+            Name = "Super Villa",
+            Price = 200,
+            Features = new List<RoomFeatures>
+            {
+                new RoomFeatures{Name = "Beds", Value="4"},
+                new RoomFeatures{Name = "Balcony", Value="2"}
+            }
+        }
+    };
+
+}

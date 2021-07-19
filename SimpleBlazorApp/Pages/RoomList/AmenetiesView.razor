@@ -1,0 +1,15 @@
+﻿@using Model
+<div class="bg-light border p-2 col-5 offset-1">
+    Ameneties - @Amenetie.Id <br/>
+    @foreach (string service in Amenetie.Servicies)
+    {
+        @service <br/>
+    }
+
+</div>
+
+
+@code {
+    [Parameter]
+    public Ameneties Amenetie { get; set; }
+}

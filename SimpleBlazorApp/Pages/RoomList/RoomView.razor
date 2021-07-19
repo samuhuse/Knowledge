@@ -1,0 +1,23 @@
+﻿@using Model
+<div class="bg-light border p-2 col-5 offset-1">
+    <h2>Room - @Room.Id</h2>
+    <br />@Room.Name
+    <br />$@Room.Price
+    <br /><input type="checkbox" @bind-value="Room.IsActive" checked="@(Room.IsActive ? "checked" : null)" /> &nbsp; is Active
+    <br />This room is @(Room.IsActive? "Active" : "Inactive")
+    <br />
+    @if (Room.IsActive)
+    {
+        @foreach (RoomFeatures features in Room.Features)
+        {
+
+            <span>@features.Name</span> <span>@features.Value</span>
+            <br />
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Room Room { get; set; }
+}

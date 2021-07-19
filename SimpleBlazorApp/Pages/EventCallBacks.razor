@@ -1,0 +1,51 @@
+﻿@page "/EventCallBack"
+
+@using Model;
+
+<h3>EventCallBacks</h3>
+<br/>
+<span>Selected Room : @_count</span>
+
+<br/>
+@foreach (Room room in roomList)
+{
+    <EventCallBacksComponent Room="room" OnChecked="SelectionChanged"/>
+}
+
+@code {
+
+    private int _count = 0;
+
+    List<Room> roomList = new List<Room>()
+    {
+        new Room
+        {
+            Id = 1,
+            Name = "Villa",
+            Price = 100,
+            Features = new List<RoomFeatures>
+            {
+                new RoomFeatures{Name = "Beds", Value="2"}
+    }
+        },
+
+        new Room
+        {
+            Id = 2,
+            Name = "Super Villa",
+            Price = 200,
+            Features = new List<RoomFeatures>
+            {
+                new RoomFeatures{Name = "Beds", Value="4"},
+                new RoomFeatures{Name = "Balcony", Value="2"}
+            }
+        }
+    };
+
+    protected void SelectionChanged(bool isSelected)
+    {
+        if (isSelected) { _count++; }
+        else { _count--; }
+    }
+
+}
