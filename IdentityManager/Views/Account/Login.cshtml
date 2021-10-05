@@ -5,7 +5,8 @@
 <form asp-controller="Account"
       asp-action="Login"
       method="post"
-      role="form">
+      role="form"
+      asp-route-returnurl ="@ViewData["ReturnUrl"]">
 
     <h4>Log in your account</h4>
     <hr />
