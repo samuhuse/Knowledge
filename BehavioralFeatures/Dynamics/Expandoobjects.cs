@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BehavioralFeatures.Dynamics
 {
-    public class Expandoobjects
+    public class ExpandoObjects
     {
         [Test]
         public void TryExpandoObject()
